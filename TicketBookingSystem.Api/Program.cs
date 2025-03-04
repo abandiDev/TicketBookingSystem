@@ -53,7 +53,7 @@ using (var scope = app.Services.CreateScope())
     var dbContext = scope.ServiceProvider.GetRequiredService<TicketBookingDbContext>();
     if (dbContext.Database.IsNpgsql())
     {
-        dbContext.Database.EnsureDeleted();
+        // dbContext.Database.EnsureDeleted();
         dbContext.Database.Migrate();
     }
     

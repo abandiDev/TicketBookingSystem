@@ -1,6 +1,6 @@
 # Movie Ticket Booking API
 
-This project is a movie ticket booking system built with ASP.NET Core (.NET 8.0) and PostgreSQL. It exposes a RESTful API for booking movie tickets, managing movies, showtimes, and users. The API includes Swagger UI for interactive documentation and uses Entity Framework Core for data access and migrations.
+This project is a movie ticket booking system built with ASP.NET Core (.NET 8.0) and PostgreSQL. It exposes a RESTful API for registering movies, booking showtimes. The API includes Swagger UI for interactive documentation and uses Entity Framework Core for data access and migrations.
 
 ## Table of Contents
 
@@ -10,7 +10,6 @@ This project is a movie ticket booking system built with ASP.NET Core (.NET 8.0)
   - [Using Docker Compose](#using-docker-compose)
 - [Database Migrations & Seeding](#database-migrations--seeding)
 - [API Documentation](#api-documentation)
-- [License](#license)
 
 ## Features
 
@@ -32,9 +31,22 @@ A sample docker-compose.yml is provided to run the API along with a PostgreSQL c
 
 To run using Docker Compose:
 
-1.Ensure Docker is running.
-2.From the project root, run
+- Ensure Docker is running.
+- From the project root, run
 
 `docker-compose up --build`
 
-3.The API container will build from TicketBookingSystem.Api/Dockerfile and map ports 8080 (HTTP) and 443 (HTTPS) to the host. The PostgreSQL container will be available on port 5432.
+- The API container will build from TicketBookingSystem.Api/Dockerfile and map ports 8080 (HTTP) and 443 (HTTPS) to the host. The PostgreSQL container will be available on port 5432.
+
+## Database Migrations & Seeding
+### Migrations:
+Migrations are automatically applied on startup with dbContext.Database.Migrate() in Program.cs.
+
+### Seeding:
+Initial data is seeded using the SeedData.Initialize method from TicketBookingSystem.Repositories/SeedData.cs. This inserts sample users (and can be extended to include movies, showtimes, etc.) if the database is empty.
+
+## API Documentation
+
+Swagger UI is enabled by default. When you run the application (via Docker Compose), navigate to:
+
+- http://localhost:8080/ (or the mapped port) to view interactive API documentation and test endpoints.
