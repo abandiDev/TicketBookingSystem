@@ -49,4 +49,4 @@ Initial data is seeded using the SeedData.Initialize method from TicketBookingSy
 
 Swagger UI is enabled by default. When you run the application (via Docker Compose), navigate to:
 
-- http://localhost:8080/ (or the mapped port) to view interactive API documentation and test endpoints.
+- http://localhost:8080/index.html (or the mapped port) to view interactive API documentation and test endpoints.
