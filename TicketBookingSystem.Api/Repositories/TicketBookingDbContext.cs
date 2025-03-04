@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using TicketBookingSystem.Domain;
+using TicketBookingSystem.Dto;
 
 namespace TicketBookingSystem.Repositories;
 
@@ -19,6 +20,9 @@ public class TicketBookingDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<PopularShowtimesDto>().HasNoKey();
+        modelBuilder.Entity<PeakBookingHoursDto>().HasNoKey();
+        
         modelBuilder.Entity<Movie>()
             .HasMany(m => m.Showtimes)
             .WithOne(s => s.Movie)
@@ -55,5 +59,4 @@ public class TicketBookingDbContext : DbContext
 
         base.OnModelCreating(modelBuilder);
     }
-    
 }

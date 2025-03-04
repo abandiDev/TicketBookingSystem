@@ -50,6 +50,7 @@ public class ShowtimeController : Controller
         return Ok();
     }
 
+    
     [HttpGet("{showTimeId}/reservation/{reservationId}")]
     public async Task<IActionResult> GetReservation(int showTimeId, int reservationId)
     {
@@ -67,5 +68,17 @@ public class ShowtimeController : Controller
             ShowtimeId = reservation.ShowtimeId,
             Status =  reservation.Status.GetDisplayName()
         });
+    }
+
+    [HttpGet("popular/{topN}")]
+    public async Task<IActionResult> GetPopularShows(int topN = 100)
+    {
+        return Ok(await _showTimeService.GetPopularShows(topN));
+    }
+
+    [HttpGet("peakhours/{topN}")]
+    public async Task<IActionResult> GetPeakBookingHours(int topN = 100)
+    {
+        return Ok(await _showTimeService.GetPeakBookingHours(topN));
     }
 }

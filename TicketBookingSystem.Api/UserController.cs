@@ -16,16 +16,17 @@ public class UserController: Controller
         _showTimeService = showTimeService;
     }
 
+    // Track booking history for users.
     [HttpGet("{userId}/history")]
     public async Task<IActionResult> Get(int userId)
     {
         var reservations = await _showTimeService.GetReservations(userId);
-        var reservationDtos = reservations.Select(x => new ReservationDto
+        var reservationDtos = reservations.Select(x => new UserHistoryDto
         {
-            Id = x.Id,
-            UserId = x.UserId,
             NumberOfSeats = x.NumberOfSeats,
             Status = x.Status.GetDisplayName(),
+            MovieTitle = x.Showtime.Movie.Title,
+            ShowTime = x.Showtime.StartTime
         });
         
         return new OkObjectResult(reservationDtos);

@@ -68,6 +68,35 @@ public class ShowTimeService : IShowTimeService
 
     public async Task<List<Reservation>> GetReservations(int userId)
     {
-        return await _dbContext.Reservations.Where( x => x.UserId == userId ).ToListAsync();
+        return await _dbContext.Reservations
+            .Include(x => x.Showtime)
+            .ThenInclude(x => x.Movie)
+            .Where( x => x.UserId == userId )
+            .ToListAsync();
+    }
+
+    public async Task<List<PopularShowtimesDto>> GetPopularShows(int topN)
+    {
+        var popularShowtimes = await _dbContext.Set<PopularShowtimesDto>()
+            .FromSqlInterpolated($"select\n(s.\"SeatingCapacity\"  - s.\"AvailableSeats\") as BookedSeats, m.\"Title\", s.\"StartTime\"\nfrom \"Showtimes\" s \njoin \"Movies\" m \non m.\"Id\" = s.\"MovieId\"\norder by 1 desc\nlimit {topN}")
+            .ToListAsync();
+        return popularShowtimes;
+    }
+
+    public async Task<List<PeakBookingHoursDto>> GetPeakBookingHours(int topN)
+    {
+        var peakBookingHours = await _dbContext.Set<PeakBookingHoursDto>()
+            .FromSqlInterpolated(
+                $@"SELECT 
+                   date_part('hour', ""BookingTime"") AS BookingHour,
+                    COUNT(*) AS ReservationCount,
+                    SUM(""NumberOfSeats"") AS TotalSeatsBooked
+                FROM ""Reservations""
+                GROUP BY BookingHour
+                ORDER BY ReservationCount DESC
+                LIMIT {topN};")
+            .ToListAsync();
+        
+        return peakBookingHours;
     }
 }
