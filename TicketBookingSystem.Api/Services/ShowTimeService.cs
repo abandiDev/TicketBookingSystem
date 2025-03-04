@@ -65,4 +65,9 @@ public class ShowTimeService : IShowTimeService
 
         return Result<Reservation>.Success(reservation);
     }
+
+    public async Task<List<Reservation>> GetReservations(int userId)
+    {
+        return await _dbContext.Reservations.Where( x => x.UserId == userId ).ToListAsync();
+    }
 }
