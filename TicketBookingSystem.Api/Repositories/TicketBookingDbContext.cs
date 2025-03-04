@@ -31,7 +31,7 @@ public class TicketBookingDbContext : DbContext
 
         modelBuilder.Entity<Showtime>()
             .Property(x => x.StartTime)
-            .HasColumnType("timestamp without time zone");
+            .HasColumnType("timestamp with time zone");
         
         modelBuilder.Entity<Showtime>()
             .HasOne(s => s.Movie)

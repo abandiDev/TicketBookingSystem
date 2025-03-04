@@ -5,15 +5,33 @@ services:
       context: "C:\\Users\\Desktop\\RiderProjects\\TicketBookingSystem"
       dockerfile: "TicketBookingSystem.Api/Dockerfile"
       target: "build"
+      args:
+        BUILD_CONFIGURATION: "Debug"
     command: []
     entrypoint:
-    - "dotnet"
-    - "/app/bin/Debug/net8.0/TicketBookingSystem.Api.dll"
-    environment: {}
+    - "/opt/JetBrains/RiderDebuggerTools/linux-x64/JetBrains.Debugger.Worker"
+    - "--runtimeconfig"
+    - "/opt/JetBrains/RiderDebuggerTools/JetBrains.Debugger.Worker.runtimeconfig.json"
+    - "--mode=server"
+    - "--frontend-port=57000"
+    - "--backend-port=57200"
+    - "--roslyn-worker-port=57400"
+    - "--timeout=60"
+    environment:
+      RIDER_DEBUGGER_LOG_DIR: "/var/opt/JetBrains/RiderDebuggerTools"
+      RESHARPER_LOG_CONF: "/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
     image: "ticketbookingsystem.api:dev"
-    ports: []
+    ports:
+    - "127.0.0.1:57015:57000"
+    - "127.0.0.1:57215:57200"
+    - "127.0.0.1:57415:57400"
     volumes:
     - "C:\\Users\\Desktop\\RiderProjects\\TicketBookingSystem\\TicketBookingSystem.Api:/app:rw"
     - "C:\\Users\\Desktop\\RiderProjects\\TicketBookingSystem:/src:rw"
     - "C:\\Users\\Desktop\\.nuget\\packages:/root/.nuget/packages"
+    - "C:\\Users\\Desktop\\AppData\\Local\\JetBrains\\RiderRemoteDebugger\\2024.3.6\\\
+      Linux64:/opt/JetBrains/RiderDebuggerTools"
+    - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.3.6\\bin\\backend-log.xml:/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
+    - "C:\\Users\\Desktop\\AppData\\Local\\JetBrains\\Rider2024.3\\log\\DebuggerWorker\\\
+      JetBrains.Debugger.Worker.2025_3_04_19_56_37:/var/opt/JetBrains/RiderDebuggerTools:rw"
     working_dir: "/app"

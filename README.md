@@ -44,6 +44,7 @@ Migrations are automatically applied on startup with dbContext.Database.Migrate(
 
 ### Seeding:
 Initial data is seeded using the SeedData.Initialize method from TicketBookingSystem.Repositories/SeedData.cs. This inserts sample users (and can be extended to include movies, showtimes, etc.) if the database is empty.
+- **Two users are initially seeded with Ids 1 and 2** (for testing purpose)
 
 ## API Documentation
 

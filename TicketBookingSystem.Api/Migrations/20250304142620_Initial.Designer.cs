@@ -12,7 +12,7 @@ using TicketBookingSystem.Repositories;
 namespace TicketBookingSystem.Migrations
 {
     [DbContext(typeof(TicketBookingDbContext))]
-    [Migration("20250304120617_Initial")]
+    [Migration("20250304142620_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -96,7 +96,7 @@ namespace TicketBookingSystem.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("StartTime")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -124,6 +124,35 @@ namespace TicketBookingSystem.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("TicketBookingSystem.Dto.PeakBookingHoursDto", b =>
+                {
+                    b.Property<double>("BookingHour")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("ReservationCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TotalSeatsBooked")
+                        .HasColumnType("integer");
+
+                    b.ToTable("PeakBookingHoursDto");
+                });
+
+            modelBuilder.Entity("TicketBookingSystem.Dto.PopularShowtimesDto", b =>
+                {
+                    b.Property<int>("BookedSeats")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.ToTable("PopularShowtimesDto");
                 });
 
             modelBuilder.Entity("TicketBookingSystem.Domain.Reservation", b =>

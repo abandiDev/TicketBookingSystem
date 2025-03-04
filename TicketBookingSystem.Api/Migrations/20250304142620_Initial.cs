@@ -27,6 +27,30 @@ namespace TicketBookingSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PeakBookingHoursDto",
+                columns: table => new
+                {
+                    BookingHour = table.Column<double>(type: "double precision", nullable: false),
+                    ReservationCount = table.Column<int>(type: "integer", nullable: false),
+                    TotalSeatsBooked = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PopularShowtimesDto",
+                columns: table => new
+                {
+                    Title = table.Column<string>(type: "text", nullable: false),
+                    BookedSeats = table.Column<int>(type: "integer", nullable: false),
+                    StartTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -47,7 +71,7 @@ namespace TicketBookingSystem.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     MovieId = table.Column<int>(type: "integer", nullable: false),
-                    StartTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    StartTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     SeatingCapacity = table.Column<int>(type: "integer", nullable: false),
                     AvailableSeats = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -110,6 +134,12 @@ namespace TicketBookingSystem.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "PeakBookingHoursDto");
+
+            migrationBuilder.DropTable(
+                name: "PopularShowtimesDto");
+
             migrationBuilder.DropTable(
                 name: "Reservations");
 
