@@ -1,0 +1,28 @@
+﻿services:
+  ticektbookingsystem:
+    build:
+      context: .
+      dockerfile: TicketBookingSystem.Api/Dockerfile
+    ports:
+      - "8080:8080"  # Maps port 80 inside the container to port 5000 on the host
+      - "443:443"
+    depends_on:
+      - postgres
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=postgres;Port=5432;Database=mydatabase;User Id=postgres;Password=your_password
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: your_password
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:

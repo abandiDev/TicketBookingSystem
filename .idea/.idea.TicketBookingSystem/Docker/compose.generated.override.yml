@@ -1,0 +1,19 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  ticektbookingsystem:
+    build:
+      context: "C:\\Users\\Desktop\\RiderProjects\\TicketBookingSystem"
+      dockerfile: "TicketBookingSystem.Api/Dockerfile"
+      target: "build"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/TicketBookingSystem.Api.dll"
+    environment: {}
+    image: "ticketbookingsystem.api:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\Desktop\\RiderProjects\\TicketBookingSystem\\TicketBookingSystem.Api:/app:rw"
+    - "C:\\Users\\Desktop\\RiderProjects\\TicketBookingSystem:/src:rw"
+    - "C:\\Users\\Desktop\\.nuget\\packages:/root/.nuget/packages"
+    working_dir: "/app"
